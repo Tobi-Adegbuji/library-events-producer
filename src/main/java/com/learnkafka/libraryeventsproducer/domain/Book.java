@@ -14,6 +14,6 @@ public class Book {
 
     private Integer bookId;
     private String bookName;
-    private String bookAuthor; 
+    private String bookAuthor;
 
 }
