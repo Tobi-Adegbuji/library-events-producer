@@ -6,6 +6,9 @@ spring:
 spring:
   profiles: local
   kafka:
+    template:
+#      Automatically configures this topic to publish records
+      default-topic: library-events
     producer:
       bootstrap-servers:
         - localhost:9092,localhost:19092,localhost:29092

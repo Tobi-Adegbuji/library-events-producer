@@ -1,7 +1,10 @@
 package com.learnkafka.libraryeventsproducer.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.learnkafka.libraryeventsproducer.domain.LibraryEvent;
+import com.learnkafka.libraryeventsproducer.producer.LibraryEventProducer;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1")
+@AllArgsConstructor
 public class LibraryEventsController {
 
-    @PostMapping("/libraryevent")
-    public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody LibraryEvent libraryEvent) {
+    private final LibraryEventProducer libraryEventProducer;
 
-        //Invoke Kafka producer
+    @PostMapping("/libraryevent")
+    public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody LibraryEvent libraryEvent) throws JsonProcessingException {
+
+        //Invokes Kafka producer
+        libraryEventProducer.sendLibraryEvent(libraryEvent);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
 
